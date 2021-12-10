@@ -165,6 +165,8 @@ router.post('/api/v1/login', async (req,res): Promise<any> => {
                             let token = await jwt.sign(payload, secret, { expiresIn: expiry})
 
                             if (token){
+                                userEmail.loginCount = 0
+                                await userEmail.save()
                                 return res.json({
                                     error: false,
                                     message: "Login Success",
